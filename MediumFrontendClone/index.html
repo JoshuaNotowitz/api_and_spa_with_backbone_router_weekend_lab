@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Product Manager Application</title>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+
+	<style>
+		.smaller {
+			width:600px;
+			margin-left:auto;
+			margin-right:auto;
+		}
+
+		.margin-top-40 {
+			margin-top:40px;
+		}
+
+		.bold {
+			font-weight:bold;
+		}
+
+		.margin-top-10 {
+			margin-top:10px;
+		}
+
+		.txt-center {
+			text-align:center;
+		}
+	</style>
+</head>
+
+<body>
+
+<div id="content"></div>
+<script type="x-handlebars-template" id="show-posts-template">
+	<div class="container margin-top-40">
+		<div>
+			<a data-toggle="modal" data-target="#post-modal" class="btn btn-primary pull-right">New Post</a>
+			<a data-toggle="modal" data-target="#login-modal" class="btn btn-primary">login</a>
+			<a data-toggle="modal" data-target="#create-account-modal" class="btn btn-primary">Create Account</a>
+		</div>
+		<div class="row">
+				{{#each postData}}
+				 	<div class="col-md-6">
+						<h2>{{title}}</h2>
+						<p>{{content}}</p>
+						<a href="#posts/{{id}}">Edit</a>
+					</div>
+
+				{{/each}}
+				</div>
+		</table>
+	</div>
+</script>
+<script type="x-handlebars-template" id="show-post-template">
+	<div class="container margin-top-40">
+		<div>
+			<a data-toggle="modal" data-target="#login-modal" class="btn btn-primary">login</a>
+		</div>
+		<div>
+			<a data-toggle="modal" data-target="#create-account-modal" class="btn btn-primary">login</a>
+		</div>
+			<h2>Title: {{postData.title}}</h2>
+			<p>{{postData.content}}</p>
+		</table>
+	</div>
+</script>
+
+<script type="x-handlebars-template" id="new-post-template">
+	<div class="well smaller margin-top-40">
+		<div class="bold">
+			Title
+		</div>
+		<div class="margin-top-10">
+			<input type="text" class="form-control" name="title"/>
+		</div>
+		<div class="bold margin-top-10">
+			Content
+		</div>
+		<div class="margin-top-10">
+			<input type="text" class="form-control" name="content"/>
+		</div>
+		<div class="bold margin-top-10">
+		<div class="margin-top-10 txt-center">
+			<a href="#" class="btn btn-success submit-post">Submit New Post</a>
+		</div>
+	</div>
+</script>
+
+<script type="x-handlebars-template" id="edit-post-template">
+	<div class="well smaller margin-top-40">
+		<div class="bold">
+			Title 
+		</div>
+		<div class="margin-top-10">
+			<input type="text" class="form-control" name="title" value="{{title}}"  />
+		</div>
+		<div class="bold margin-top-10">
+			Content
+		</div>
+		<div class="margin-top-10">
+			<input type="text" class="form-control" name="content" value="{{content}}" />
+		</div>
+		<div class="checkbox">
+	    <label>
+	      <input name="Public" value="1" type="checkbox"> Public?
+	    </label>
+	  </div>
+		<div class="margin-top-10 txt-center">
+			<a href="#" class="btn btn-success submit-edits" id="{{id}}">Submit Edits</a>
+		</div>
+	</div>
+</script>
+
+<div id="create-account-modal" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h4 class="modal-title">Creat account</h4>
+			</div>
+			<div class="modal-body">
+				<div class="bold">
+					First
+				</div>
+				<div class="margin-top-10">
+					<input type="text" class="form-control" id="add-first"/>
+				</div>
+				<div class="bold margin-top-10">
+					Last
+				</div>
+				<div class="margin-top-10">
+					<input type="text" class="form-control" id="add-last" />
+				</div>
+				<div class="bold margin-top-10">
+					Email
+				</div>
+				<div class="margin-top-10">
+					<input type="text" class="form-control"  id="add-email"/>
+				</div>
+				<div class="bold margin-top-10">
+					Password
+				</div>
+				<div class="margin-top-10">
+					<input type="password" class="form-control"  id="add-password"/>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary" id="signup">Creat account</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div id="login-modal" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h4 class="modal-title">Login</h4>
+			</div>
+			<div class="modal-body">
+				<div class="bold margin-top-10">
+					Email
+				</div>
+				<div class="margin-top-10">
+					<input type="text" class="form-control"  id="login-email"/>
+				</div>
+				<div class="bold margin-top-10">
+					Password
+				</div>
+				<div class="margin-top-10">
+					<input type="password" class="form-control"  id="login-password"/>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary" id="login">Login</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div id="post-modal" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h4 class="modal-title">Post</h4>
+			</div>
+			<div class="modal-body">
+				<div class="bold margin-top-10">
+					Title
+				</div>
+				<div class="margin-top-10">
+					<input type="text" class="form-control"  id="post-title"/>
+				</div>
+				<div class="bold margin-top-10">
+					Content
+				</div>
+				<div class="margin-top-10">
+					<input type="text" class="form-control"  id="post-content"/>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary" id="new_post">Submit Post</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="http://underscorejs.org/underscore-min.js"></script>
+<script src="http://backbonejs.org/backbone-min.js"></script>
+<script src="libraries/handlebars.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+<script src="app.js"></script>
+
+</body>
+
+</html>
